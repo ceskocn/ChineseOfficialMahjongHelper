@@ -70,7 +70,7 @@ void RecordHistoryScene::updateRecordTexts() {
         seatscore[3].first = 3, seatscore[3].second = 0;
         for (int i = 0; i < 16; ++i) {
             int s[4];
-            TranslateDetailToScoreTable(record.detail[i], s);
+            TranslateDetailToScoreTable(record.detail[i], record.mode, s);
             seatscore[0].second += s[0];
             seatscore[1].second += s[1];
             seatscore[2].second += s[2];
@@ -804,7 +804,7 @@ static void SummarizeRecords(const std::vector<int8_t> &flags, const std::vector
             }
 
             int scoreTable[4];
-            TranslateDetailToScoreTable(detail, scoreTable);
+            TranslateDetailToScoreTable(detail, record.mode, scoreTable);
             for (int n = 0; n < 4; ++n) {
                 totalScores[n] += scoreTable[n];
             }
