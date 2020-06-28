@@ -186,6 +186,12 @@ bool ScoreSheetScene::initWithRecord(Record *record) {
         cw::scaleLabelToFitWidth(label, gap - 4.0f);
     }
 
+    label = Label::createWithSystemFont("", "Arail", 12);
+    label->setTextColor(C4B_GRAY);
+    label->setPosition(Vec2(colPosX[5], line3Y));
+    drawNode->addChild(label);
+    _modeLabel = label;
+
     // 第4栏：累计
     const float line4Y = tableHeight - cellHeight * 3.5f;
     label = Label::createWithSystemFont(__UTF8("累计"), "Arail", 12);
@@ -602,6 +608,8 @@ void ScoreSheetScene::recover() {
     unsigned currentIdx = _record.current_index;
     int totalScores[4] = { 0 };
 
+    _modeLabel->setString(_record.mode == 0 ? __UTF8("翻三") : __UTF8("全铳"));
+
     // 逐行填入数据
     if (_isTotalMode) {
         for (unsigned i = 0; i < currentIdx; ++i) {
@@ -662,6 +670,8 @@ void ScoreSheetScene::reset() {
     }
 
     refreshTitle();
+
+    _modeLabel->setString("");
 
     for (int i = 0; i < 4; ++i) {
         _nameLabel[i]->setVisible(false);
